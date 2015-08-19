@@ -9,6 +9,12 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['sass', 'cssmin']
             },
+            // js: {
+            //     files: [ 
+            //         'js/**',
+            //     ],
+            //     tasks: ['uglify']
+            // },
         },
         cssmin: {
           target: {
@@ -29,14 +35,23 @@ module.exports = function(grunt) {
                 }
             }
         },
+        // uglify: {
+        //     my_target: {
+        //         files: {
+        //             'js/plugins.min.js' : ['js/plugins.js']
+        //         }
+        //     }
+        // },
     });
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    // grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('default', [
         'sass',
         'cssmin',
+        // 'uglify',
         'watch',
     ]);
 };

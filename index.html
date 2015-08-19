@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="" ng-app="myApp">
+<html class="no-js" lang="" ng-app="todo">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -12,39 +12,53 @@
 
         <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:700,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/controllers.js"></script>
+        <script src="js/vendor/angular.min.js"></script>
+        <!--<script src="js/controllers.js"></script>-->
     </head>
-    <body ng-controller="customersCtrl">
-        <header class="header">
-            <a class="logo" href="/"><img src="img/logo.svg" alt="myApp logo" /></a>
-            <div class="search-bar">
-                <input type="text" placeholder="Search" ng-model="queryCust" />    
-                <select ng-model="orderProp">
-                    <option default value="">Sort By:</option>
-                    <option value="Name">Name A to Z</option>                  
-                    <option value="City">City A to Z</option>                  
-                    <option value="Country">Country A to Z</option>                  
-                </select>
-            </div>
+    <body ng-controller="ToDoCtrl">
+        <header class="task-bar">
+            <input type="text" name="add-task" placeholder="Add task" ng-model="taskName" ng-keyup="addTask()" />    
+            <select>
+                <option value='normal'>Normal</option>
+                <option value='medium'>Medium</option>
+                <option value='high'>High</option>
+            </select>
         </header>
-        <section class="section section-body">
-            <div class="container container-main">
-                <h1 style="display: none;">Customers List</h1>
 
-                <div class="wrapper">
-                    <div class="row total">Total: {{ (names|filter:queryCust).length }} Customers</div>
-                    <div class="row" ng-repeat="x in names | filter: queryCust | orderBy:orderProp">
-                        <h2>{{x.Name}}</h2> 
-                        <div>{{x.City + ', ' + x.Country}}</div>
-                    </div>
-                </div>
+        <section id="todoapp" class="section section-body">
+            <div class="container container-main">
+
+                <ul class="todo-list">
+                    <li ng-repeat="task in tasklist">
+                        <input type="checkbox" name="checkbox" />
+                        <span>{{task.name}}</span>
+                    </li>        
+                </ul>
 
             </div>
         </section>
-        <a href="#" class="icon-top"><img src="img/arw-up.svg" alt="myApp arrow" /></a>
+
+        <script>
+            angular.module('todo', [])
+
+            .controller('ToDoCtrl', ['$scope', function($scope) {
+                $scope.tasklist = [
+                    { name : 'First Example Task' },
+                    { name : 'Second Example Task' },
+                ];
+
+                $scope.addTask = function() {
+                    if(event.keyCode == 13 && $scope.taskName) {
+                        $scope.tasklist.push({ "name" : $scope.taskName });
+                        $scope.taskName = "";
+                    }
+                }
+                $scope.deleteTask = function() {
+
+                }
+
+            }]);
+
+        </script>
     </body>
 </html>
