@@ -59,7 +59,7 @@ input[type="submit"],
 button {
 	position: relative;
 	display: inline-block;
-	padding: 14px 60px;
+	padding: 10px 40px;
 	text-transform: uppercase;
 	overflow: hidden;
 	border: 3px solid $brand-color;
@@ -92,7 +92,8 @@ input[type="submit"] {
 	color: $white;
 	cursor: pointer;
 	&:hover {
-		background-color: $white;
+		// background-color: $white;
+		background-color: transparent;
 		color: $brand-color;
 	}
 }
@@ -124,6 +125,18 @@ input[placeholder] {
 	@include placeholder($body-color);
 }
 
+input,
+select {
+	border: none;
+	background-color: $grey-light;
+	@include border-radius(2px);
+	@include transition(background-color 0.3s);
+	&:focus {
+		background-color: $white;
+		outline: none;
+	}
+}
+
 p {
 	margin-top: 0;
 	margin-bottom: 32px;
@@ -144,7 +157,7 @@ pre {
 /* Repeatables */
 
 .section {
-	margin: 20px 0;
+	margin: 0 0 20px 0;
 }
 .section-body {
 	h1 {
@@ -161,7 +174,7 @@ pre {
 .container-main {
 	padding-top: 25px;
 	@media screen and (min-width: $screen-xs) {
-		padding-top: 40px;
+		padding-top: 20px;
 	}
 }
 
@@ -170,18 +183,53 @@ pre {
 	padding-left: 0;
 	margin: 0;
 	 > li {
-		padding: 10px 20px;
 		margin: 0 0 14px 0;
+		line-height: 40px;
 		background-color: $white;
 		border-bottom: 4px solid $grey-light;
-		h2 {
-			margin-top: 0;
+
+		&.completed {
+			@include transition(opacity 0.3s);
+			&.completed-true {
+				opacity: 0.7;	
+				.name {
+					text-decoration: line-through;
+				}	
+			}
+		}
+
+		.number {
+			display: inline-block;
+			height: 40px;
+			width: 40px;
+			text-align: center;
+			background-color: $grey-dark;
+			color: $white;
+		}
+
+		.priority {
+			float: right;
+			width: 40px;
+			padding: 0 10px;
+			text-align: center;
+			background-color: $color-low;
+			color: $white;
+			@media screen and (min-width: $screen-xs) {
+				width: 77px;
+			}
 			@media screen and (max-width: $screen-xs) {
-				font-size: 28px;
+				text-indent: -999em;
 			}
-			@media screen and (max-width: 320px) {
-				word-break: break-word;
+			&.medium {
+				background-color: $color-medium;
+			}			
+			&.high {
+				background-color: $color-high;
 			}
+		}
+
+		input {
+			margin: 0 10px;
 		}
 	}
 }
@@ -204,24 +252,31 @@ pre {
 		padding: 10px;
 		width: 50%;
 		font-family: $font-family-body;
-		border: none;
-		background-color: $grey-light;
-		@include border-radius(2px);
-		@include transition(background-color 0.3s);
-		&:focus {
-			background-color: $white;
-			outline: none;
-		}
 		@media screen and (max-width: $screen-xs) {
 			width: 100%;
 			margin-bottom: 10px
 		}
 	}
+	select {
+		float: right;
+		height: 39px;
+		padding: 10px;
+		@media screen and (max-width: $screen-xs) {
+			width: 100%;
+		}
+	}
 }
 
-.total {
-	background-color: #f0f0f0;
-	font-family: $font-family-heading;
-	font-weight: $font-weight-bold;
-	text-transform: uppercase;
+#todoapp {
+	select {
+		padding: 0 10px;
+		width: 100%;
+		height: 40px;
+		line-height: 40px;
+		margin-bottom: 34px;
+		background-color: #f0f0f0;
+		&:focus {
+			background-color: $white;
+		}
+	}
 }

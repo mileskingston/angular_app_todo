@@ -18,8 +18,8 @@
     <body ng-controller="ToDoCtrl">
         <header class="task-bar">
             <input type="text" name="add-task" placeholder="Add task" ng-model="taskName" ng-keyup="addTask()" />    
-            <select>
-                <option value='normal'>Normal</option>
+            <select ng-model="priority">
+                <option value='low'>Low</option>
                 <option value='medium'>Medium</option>
                 <option value='high'>High</option>
             </select>
@@ -28,12 +28,23 @@
         <section id="todoapp" class="section section-body">
             <div class="container container-main">
 
+                <select ng-model="orderProp">
+                    <option default value="">Sort by...</option>
+                    <option value="name">A-Z</option>
+                    <option value="priority">Priority</option>
+                </select>
+
                 <ul class="todo-list">
-                    <li ng-repeat="task in tasklist">
-                        <input type="checkbox" name="checkbox" />
-                        <span>{{task.name}}</span>
+                    <li ng-class="item" class="completed completed-{{ task.completed }}" ng-repeat="task in tasklist | orderBy:orderProp">
+                        <span class="number">{{$index + 1}}</span>
+                        <input type="checkbox" name="checkbox" ng-model="task.completed" />
+                        <span class="name">{{task.name}}</span>
+                        <span class="priority {{ task.priority }}">{{task.priority}}</span>
+                        <span class="priority {{ task.priority }}">{{task.priority.number}}</span>
                     </li>        
                 </ul>
+
+                <button class="btn" onclick="">Delete Selected</button>
 
             </div>
         </section>
@@ -43,14 +54,21 @@
 
             .controller('ToDoCtrl', ['$scope', function($scope) {
                 $scope.tasklist = [
-                    { name : 'First Example Task' },
-                    { name : 'Second Example Task' },
+                    { name : 'First Example Task', completed : false, priority : "low" },
+                    { name : 'Second Example Task', completed : false, priority : "high" },
                 ];
+
+                $scope.priority = "low";
 
                 $scope.addTask = function() {
                     if(event.keyCode == 13 && $scope.taskName) {
-                        $scope.tasklist.push({ "name" : $scope.taskName });
+                        $scope.tasklist.push({ 
+                            "name" : $scope.taskName,
+                            "completed" : false,
+                            "priority" : $scope.priority 
+                        });
                         $scope.taskName = "";
+                        $scope.priority = "low";
                     }
                 }
                 $scope.deleteTask = function() {
