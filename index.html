@@ -35,16 +35,16 @@
                 </select>
 
                 <ul class="todo-list">
-                    <li ng-class="item" class="completed completed-{{ task.completed }}" ng-repeat="task in tasklist | orderBy:orderProp">
+                    <li class="task" ng-class="{'task-completed' : task.completed == true}" ng-repeat="task in tasklist | orderBy:orderProp">
                         <span class="number">{{$index + 1}}</span>
-                        <input type="checkbox" name="checkbox" ng-model="task.completed" />
+                        <input type="checkbox" name="checkbox" ng-model="task.completed[$index]" />
                         <span class="name">{{task.name}}</span>
                         <span class="priority {{ task.priority }}">{{task.priority}}</span>
-                        <span class="priority {{ task.priority }}">{{task.priority.number}}</span>
+                        <span class="delete icon" title="Delete Task" ng-click="deleteTask($index)"></span>
                     </li>        
                 </ul>
 
-                <button class="btn" onclick="">Delete Selected</button>
+                <button class="btn" ng-click="deleteTask($index)">Delete Selected</button>
 
             </div>
         </section>
@@ -54,8 +54,8 @@
 
             .controller('ToDoCtrl', ['$scope', function($scope) {
                 $scope.tasklist = [
-                    { name : 'First Example Task', completed : false, priority : "low" },
-                    { name : 'Second Example Task', completed : false, priority : "high" },
+                    { name : 'First Example Task', priority : "low" },
+                    { name : 'Second Example Task', priority : "high" },
                 ];
 
                 $scope.priority = "low";
@@ -64,16 +64,19 @@
                     if(event.keyCode == 13 && $scope.taskName) {
                         $scope.tasklist.push({ 
                             "name" : $scope.taskName,
-                            "completed" : false,
                             "priority" : $scope.priority 
                         });
                         $scope.taskName = "";
                         $scope.priority = "low";
                     }
                 }
-                $scope.deleteTask = function() {
 
-                }
+                $scope.completed = [];
+
+                $scope.deleteTask = function(index) {
+                    alert($scope.completed);
+                    $scope.tasklist.splice(index, 1);
+                }            
 
             }]);
 
