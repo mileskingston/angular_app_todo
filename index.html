@@ -30,7 +30,7 @@
                 <select ng-model="orderProp">
                     <option default value="">Sort by...</option>
                     <option value="name">A-Z</option>
-                    <option value="priority">Priority</option>
+                    <option value="mySort()">Priority</option>
                 </select>
 
                 <ul class="todo-list">
@@ -49,12 +49,10 @@
             </div>
         </section>
 
-        <script src="js/vendor/angular-animate.1.4.4.min.js"></script>
-
         <script>
-            angular.module('todo', ['ngAnimate'])
+            var myApp = angular.module('todo', [])
 
-            .controller('ToDoCtrl', ['$scope', 'filterFilter', function($scope, filterFilter) {
+            myApp.controller('ToDoCtrl', ['$scope', 'filterFilter', function($scope, filterFilter) {
                 $scope.tasklist = [
                     { name : 'First Example Task', completed : false, priority : "low" },
                     { name : 'Second Example Task', completed : false, priority : "high" },
