@@ -59,65 +59,21 @@ input[type="submit"],
 button {
 	position: relative;
 	display: inline-block;
-	padding: 10px 40px;
+	padding: 8px 25px;
 	text-transform: uppercase;
 	overflow: hidden;
-	border: 3px solid $brand-color;
 	font-family: $font-family-heading;
+	background-color: $brand-color;	
+	color: $white;
+	border: none;
+	border-bottom: 4px solid darken($brand-color, 15%);
+	cursor: pointer;
 	@include transition(all 0.3s);
 	&:focus {
 		outline: none;
 	}
-}
-.btn {
-	&:after {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 0;
-		z-index: -1;
-		@include transition(all 0.3s);
-	}
 	&:hover {
-		&:after {
-			height: 100%;
-		}
-	}
-}
-button,
-input[type="submit"] {
-	background-color: $brand-color;	
-	color: $white;
-	cursor: pointer;
-	&:hover {
-		// background-color: $white;
-		background-color: transparent;
-		color: $brand-color;
-	}
-}
-
-.btn-primary {
-	color: $brand-color;
-	&:after {
-		background-color: $brand-color;
-	}
-	&:hover {
-		color: $white;
-	}
-}
-.btn-secondary {
-	color: $white;
-	&:after {
-		background-color: $brand-color;
-		height: 100%;
-	}
-	&:hover {
-		color: $brand-color;
-		&:after {
-			height: 0;		
-		}
+		background-color: darken($brand-color, 5%);
 	}
 }
 
@@ -196,6 +152,10 @@ pre {
 				text-decoration: line-through;
 			}	
 		}
+		&.task-empty {
+			background-color: transparent;
+			border-bottom: none;
+		}
 
 		.number {
 			display: inline-block;
@@ -232,13 +192,27 @@ pre {
 		}
 
 		.delete {
-			position: absolute;
-			top: 0;
-			right: 0;
 			display: block;
-			height: 20px;
-			width: 30px;
-			background-color: $color-high;	
+			position: relative;
+			float: right;
+			height: 40px;
+			width: 40px;
+			text-align: center;
+			color: $white;
+			background-color: $black;
+			cursor: pointer;
+			@include transition(background-color 0.3s);
+
+			&:after {
+				content: 'X';
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 100%;
+			}
+			&:hover {
+				background-color: lighten($black, 45%);
+			}	
 		}
 	}
 }
@@ -284,6 +258,7 @@ pre {
 		line-height: 40px;
 		margin-bottom: 34px;
 		background-color: #f0f0f0;
+		border-bottom: 4px solid $grey-light;
 		&:focus {
 			background-color: $white;
 		}

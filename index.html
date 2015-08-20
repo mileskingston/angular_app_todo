@@ -12,8 +12,7 @@
 
         <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:700,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/angular.min.js"></script>
-        <!--<script src="js/controllers.js"></script>-->
+        <script src="js/vendor/angular.1.4.4.min.js"></script>
     </head>
     <body ng-controller="ToDoCtrl">
         <header class="task-bar">
@@ -39,20 +38,23 @@
                         <span class="number">{{$index + 1}}</span>
                         <input type="checkbox" name="checkbox" ng-model="task.completed" />
                         <span class="name">{{task.name}}</span>
-                        <span class="priority {{ task.priority }}">{{task.priority}}</span>
                         <span class="delete icon" title="Delete Task" ng-click="deleteTask($index)"></span>
-                    </li>        
+                        <span class="priority {{ task.priority }}">{{task.priority}}</span>
+                    </li>     
+                    <li class="task-empty" ng-show="!tasklist.length">No current tasks. Please add more.</li>   
                 </ul>
 
-                <button class="btn" ng-click="deleteTask()">Delete Selected</button>
+                <button class="btn" ng-click="removeTask($index)">Delete Selected</button>
 
             </div>
         </section>
 
-        <script>
-            angular.module('todo', [])
+        <script src="js/vendor/angular-animate.1.4.4.min.js"></script>
 
-            .controller('ToDoCtrl', ['$scope', function($scope) {
+        <script>
+            angular.module('todo', ['ngAnimate'])
+
+            .controller('ToDoCtrl', ['$scope', 'filterFilter', function($scope, filterFilter) {
                 $scope.tasklist = [
                     { name : 'First Example Task', completed : false, priority : "low" },
                     { name : 'Second Example Task', completed : false, priority : "high" },
@@ -74,8 +76,13 @@
 
                 $scope.deleteTask = function(index) {
                     $scope.tasklist.splice(index, 1);
-                }            
+                }  
 
+                $scope.removeTask = function() {
+                    $scope.tasklist = filterFilter($scope.tasklist, function(task) {
+                        return !task.completed;
+                    })
+                }            
             }]);
 
         </script>
